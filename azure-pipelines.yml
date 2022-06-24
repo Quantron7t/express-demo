@@ -1,0 +1,59 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master #this is the origin branch where any commits are pushed triggers a CI
+
+variables:
+  dockerRegisteryServiceConnection: "mar-azure-container-registry"
+  imageRepository: 'sample-node-app' 
+  containerRegitry: 'marazureregistry.azurecr.io'
+  dockerfilePath: '$(Build.SourceDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+  vmImageName: 'ubuntu-latest'
+
+stages:
+  - stage: Environment
+    displayName: Print env variables, build and push
+    jobs: 
+    -  job: Print_Env_Variables
+       displayName: Print environment variables
+       pool:
+         vmImage: $(vmImageName)
+       steps:
+       -  task: Bash@3
+          inputs:
+            targetType : 'inline'
+            script: | 
+              echo 'Environment variables printing...'
+              echo 'Service connection: '$(dockerRegisteryServiceConnection)
+              echo 'Image Repo: ' $(imageRepository)
+              echo 'Azure container registry: ' $(containerRegistry)
+              echo 'Docker file path: ' $(dockerfilePath)
+              echo 'Build Id: ' $(tag)
+    - job: Build_node_project
+      displayName: Build Node app
+      dependsOn: Print_Env_Variable
+      pool:
+        vmImage: $(vmImageName)
+      steps:
+        - task: Docker@2
+          displayName: Building and pushing image to azure container registry
+          inputs: 
+            command: buildAndPush
+            repository: ${imageRepository}
+            Dockerfile: $(dockerfilePath)
+            containerRegistry: $(dockerRegisteryServiceConnection)
+            tags: |
+              $(tag)
+              latest
+        - task: PublishBuildArtifacts@1
+          displayName: Publish Artifacts
+          inputs:
+            PathtoPublish: '$(System.DefaultWorkingDirectory)/deployment/'
+            ArtifactName: 'first-node-artifact' 
+            publishLocation: Container
+                            
+
