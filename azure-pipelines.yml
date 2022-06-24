@@ -43,7 +43,7 @@ stages:
           displayName: Building and pushing image to azure container registry
           inputs: 
             command: buildAndPush
-            repository: ${imageRepository}
+            repository: $(imageRepository)
             Dockerfile: $(dockerfilePath)
             containerRegistry: $(dockerRegisteryServiceConnection)
             tags: |
