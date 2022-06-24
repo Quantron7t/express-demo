@@ -10,7 +10,7 @@ variables:
   dockerRegisteryServiceConnection: 'mar-azure-container-registry'
   imageRepository: 'sample-node-app' 
   containerRegitry: 'marazureregistry.azurecr.io'
-  dockerfilePath: '$(Build.SourceDirectory)/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
   vmImageName: 'ubuntu-latest'
 
