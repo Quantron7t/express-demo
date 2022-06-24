@@ -7,7 +7,7 @@ trigger:
 - master #this is the origin branch where any commits are pushed triggers a CI
 
 variables:
-  dockerRegisteryServiceConnection: "mar-azure-container-registry"
+  dockerRegisteryServiceConnection: 'mar-azure-container-registry'
   imageRepository: 'sample-node-app' 
   containerRegitry: 'marazureregistry.azurecr.io'
   dockerfilePath: '$(Build.SourceDirectory)/Dockerfile'
