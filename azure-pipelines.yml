@@ -35,7 +35,7 @@ stages:
               echo 'Build Id: ' $(tag)
     - job: Build_node_project
       displayName: Build Node app
-      dependsOn: Print_Env_Variable
+      dependsOn: Print_Env_Variables
       pool:
         vmImage: $(vmImageName)
       steps:
