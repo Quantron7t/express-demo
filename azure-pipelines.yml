@@ -48,7 +48,6 @@ stages:
             containerRegistry: $(dockerRegisteryServiceConnection)
             tags: |
               $(tag)
-              latest
         - task: PublishBuildArtifacts@1
           displayName: Publish Artifacts
           inputs:
