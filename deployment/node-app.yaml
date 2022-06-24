@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: sample-node-app
-          image: webinaracr.azurecr.io/sample-node-app:latest
+          image: marazureregistry.azurecr.io/sample-node-app:latest
           imagePullPolicy: Always
           ports:
           - containerPort: 3000
